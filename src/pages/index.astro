@@ -1,11 +1,85 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
 ---
-
 <Layout>
-	<Welcome />
+  <header class="site-header" role="banner">
+    <div class="container site-header-inner">
+      <a href="/" class="wordmark" aria-label="Samplia Hub home">Samplia Hub</a>
+      <nav aria-label="primary">
+        <a class="btn btn--primary" href="https://tally.so/r/w4e8yo" target="_blank" rel="noopener noreferrer" aria-label="Apply to join Samplia Hub">
+          Apply
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="hero container">
+      <div class="overline">Madrid, Spain</div>
+      <h1>Build. Ship. <span class="grad-text">Belong.</span></h1>
+      <p>Spain’s home for serious builders — free coworking, community, and momentum.</p>
+      <div>
+        <a class="btn btn--primary btn--lg" href="https://tally.so/r/w4e8yo" target="_blank" rel="noopener noreferrer" aria-label="Apply to join Samplia Hub via Tally">
+          Apply to join
+        </a>
+      </div>
+    </section>
+
+    <div class="container sections">
+      <section class="block" aria-labelledby="who">
+        <h2 id="who">Who we’re looking for</h2>
+        <ul class="list">
+          <li>Doers with a bias to action</li>
+          <li>Generous collaborators who give before they get</li>
+          <li>Reliable partners who show up</li>
+          <li>Teams and solo founders with momentum</li>
+        </ul>
+      </section>
+
+      <section class="block" aria-labelledby="what">
+        <h2 id="what">What you get</h2>
+        <ul class="list">
+          <li>Workspace with fast Wi‑Fi and maker‑first setup</li>
+          <li>Regular events and founder circles</li>
+          <li>Demo days and investor intros</li>
+          <li>1:1 mentorship and office hours</li>
+          <li>Partner perks (tools, credits, discounts)</li>
+        </ul>
+      </section>
+
+      <section class="block two-col" aria-labelledby="how">
+        <div>
+          <h2 id="how">How it works</h2>
+          <ul class="list">
+            <li>Rolling interviews and fast decisions</li>
+            <li>Limited spots to keep quality high</li>
+            <li>No membership fees</li>
+          </ul>
+        </div>
+        <div>
+          <h2 id="expectations">Expectations</h2>
+          <ul class="list">
+            <li>Contribute (share progress, give feedback, help others)</li>
+            <li>Participate (attend sessions, show your work)</li>
+            <li>Build (ship consistently, track momentum)</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="block" aria-labelledby="location">
+        <h2 id="location">Location</h2>
+        <p class="location">
+          <span class="badge">Madrid, Spain</span>
+          <!-- Get directions (wire later): <a href="#" aria-label="Get directions">Get directions</a> -->
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div>© Samplia Hub</div>
+      <!-- Socials (later): <a href="#">X</a> · <a href="#">LinkedIn</a> -->
+    </div>
+  </footer>
 </Layout>
