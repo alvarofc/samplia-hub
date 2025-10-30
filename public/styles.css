@@ -24,9 +24,18 @@ body{
   font-family:Inter,ui-sans-serif,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Apple Color Emoji","Segoe UI Emoji";
   line-height:1.6;font-size:16px;text-rendering:optimizeLegibility;
   background:
-    radial-gradient(1200px 800px at 10% -10%, rgba(212,20,90,.06), transparent 60%),
-    radial-gradient(800px 600px at 90% 10%, rgba(255,93,115,.05), transparent 60%),
+    radial-gradient(1200px 800px at 10% -10%, rgba(212,20,90,.12), transparent 60%),
+    radial-gradient(800px 600px at 90% 10%, rgba(255,93,115,.10), transparent 60%),
     #ffffff;
+}
+body::after{
+  content:"";
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  pointer-events:none;
+  opacity:.045;
+  z-index:-1;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='3.5' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 img,svg{display:block;max-width:100%}
 a{text-decoration:none;color:inherit}
@@ -70,3 +79,17 @@ footer.site-footer{border-top:1px solid var(--border);padding-block:var(--space-
 .grad-text{background:var(--brand-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 
 @media (min-width:900px){.two-col{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-6)}}
+
+@keyframes grain{
+  0%{transform:translate(0,0)}
+  10%{transform:translate(-5%, -10%)}
+  20%{transform:translate(-15%, 5%)}
+  30%{transform:translate(7%, -25%)}
+  40%{transform:translate(-5%, 25%)}
+  50%{transform:translate(-15%, 10%)}
+  60%{transform:translate(15%, 0%)}
+  70%{transform:translate(0%, 15%)}
+  80%{transform:translate(3%, 35%)}
+  90%{transform:translate(-10%, 10%)}
+  100%{transform:translate(0,0)}
+}
