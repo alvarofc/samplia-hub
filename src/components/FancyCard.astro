@@ -1,0 +1,151 @@
+---
+export interface Props { class?: string }
+const { class: className } = Astro.props;
+---
+<div class:list={["fancy-card", className]} data-fancy-card>
+  <div class="fancy-card__inner">
+    <div class="fancy-card__spotlight"></div>
+    <div class="fancy-card__reflection"></div>
+    <div class="fancy-card__content">
+      <slot />
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+(function() {
+  function initFancyCards() {
+    const cards = document.querySelectorAll('[data-fancy-card]');
+    
+    cards.forEach(card => {
+      const inner = card.querySelector('.fancy-card__inner');
+      const spotlight = card.querySelector('.fancy-card__spotlight');
+      if (!inner || !spotlight) return;
+
+      const handleMove = (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        spotlight.style.setProperty('--spot-x', x + 'px');
+        spotlight.style.setProperty('--spot-y', y + 'px');
+      };
+
+      const handleEnter = () => {
+        card.classList.add('is-hovered');
+      };
+
+      const handleLeave = () => {
+        card.classList.remove('is-hovered');
+      };
+
+      card.addEventListener('mouseenter', handleEnter);
+      card.addEventListener('mousemove', handleMove);
+      card.addEventListener('mouseleave', handleLeave);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFancyCards);
+  } else {
+    initFancyCards();
+  }
+})();
+</script>
+
+<style>
+  .fancy-card {
+    position: relative;
+  }
+  .fancy-card__inner {
+    position: relative;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .fancy-card__inner::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: calc(var(--radius, 14px) + 2px);
+    padding: 2px;
+    background: conic-gradient(
+      from var(--beam-angle, 0deg) at 50% 50%,
+      transparent 0deg,
+      transparent 340deg,
+      rgba(255, 93, 115, 0.7) 350deg,
+      rgba(212, 20, 90, 0.9) 355deg,
+      rgba(255, 93, 115, 0.7) 360deg,
+      transparent 360deg
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    filter: blur(3px);
+    z-index: 10;
+  }
+  .fancy-card.is-hovered .fancy-card__inner::before {
+    opacity: 1;
+    animation: fc-beam 2.5s linear infinite;
+  }
+  .fancy-card.is-hovered .fancy-card__inner {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(230, 72, 87, 0.12);
+  }
+  .fancy-card__spotlight {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius, 14px);
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(
+      280px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+      rgba(255, 255, 255, 0.08),
+      transparent 60%
+    );
+    transition: opacity 0.3s ease;
+    z-index: 1;
+  }
+  .fancy-card.is-hovered .fancy-card__spotlight {
+    opacity: 1;
+  }
+  .fancy-card__reflection {
+    position: absolute;
+    top: 0;
+    left: 15%;
+    width: 50%;
+    height: 35%;
+    border-radius: var(--radius, 14px);
+    pointer-events: none;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 60%);
+    filter: blur(20px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+  }
+  .fancy-card.is-hovered .fancy-card__reflection {
+    opacity: 0.35;
+  }
+  .fancy-card__content {
+    position: relative;
+    z-index: 3;
+    border-radius: var(--radius, 14px);
+    overflow: hidden;
+  }
+  .fancy-card__content > * {
+    border-radius: var(--radius, 14px);
+  }
+
+  @keyframes fc-beam {
+    from { --beam-angle: 0deg; }
+    to { --beam-angle: 360deg; }
+  }
+  
+  @property --beam-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+  }
+</style>
