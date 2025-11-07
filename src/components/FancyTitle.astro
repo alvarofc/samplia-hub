@@ -24,7 +24,7 @@ const { text } = Astro.props as Props;
 
     <g class="wobble">
       <!-- Fill -->
-      <text x="50%" y="62%" text-anchor="middle" dominant-baseline="middle" class="title-fill">
+      <text x="50%" y="62%" text-anchor="middle" dominant-baseline="middle" class="title-fill" fill="#D4145A" stroke="none">
         {text}
       </text>
       <!-- Shimmer stroke overlay -->
@@ -37,23 +37,24 @@ const { text } = Astro.props as Props;
 
 <style>
   .fancy-title{ display:block }
-  .fancy-title svg{ width:100%; height:clamp(80px, 14vw, 180px); overflow:visible }
+  .fancy-title svg{ width:100%; height:clamp(80px, 14vw, 180px); overflow:visible; background-color: transparent }
   .fancy-title .title-fill{
-    font: 900 clamp(42px,7vw,88px) 'Fraunces', ui-serif, Georgia, serif;
+    font-weight: 900;
+    font-size: clamp(50px, 7vw, 88px);
+    font-family: 'Fraunces', ui-serif, Georgia, serif;
     letter-spacing: -.02em;
     fill: url(#ft-grad);
-    paint-order: stroke fill;
-    stroke-width: 1.2px;
-    stroke: rgba(0,0,0,.04);
+    stroke: none;
   }
   .fancy-title .title-shimmer{
-    font: inherit;
+    font-weight: 900;
+    font-size: clamp(50px, 7vw, 88px);
+    font-family: 'Fraunces', ui-serif, Georgia, serif;
     fill: none;
     stroke: rgba(255,255,255,.55);
     stroke-width: 1.4px;
     stroke-linecap: round;
     stroke-dasharray: 140 22;
-    filter: url(#ft-noise);
     animation: ft-shimmer 4.6s ease-in-out infinite alternate;
   }
   .fancy-title .wobble{ animation: ft-wobble 8s ease-in-out infinite; transform-origin: 50% 50% }
@@ -64,5 +65,18 @@ const { text } = Astro.props as Props;
     25%{ transform: translateY(-1px) rotate(-.2deg) }
     50%{ transform: translateY(1px) rotate(.25deg) }
     75%{ transform: translateY(-.5px) rotate(-.15deg) }
+  }
+
+  /* Mobile-specific bump to counter SVG/CSS inconsistencies on small devices */
+  @media (max-width: 480px) {
+    .fancy-title svg{ height: 160px !important; background: transparent !important; }
+    .fancy-title .title-fill,
+    .fancy-title .title-shimmer{
+      font-size: 88px !important;
+    }
+    /* Disable the noise filter on small devices (avoids gray-ish overlay) */
+    .fancy-title .title-shimmer{ filter: none !important; stroke: rgba(255,255,255,0.9) !important; }
+    /* Remove any inherited background from the container */
+    .fancy-title{ background: transparent !important; }
   }
 </style>

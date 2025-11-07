@@ -68,7 +68,6 @@ section.block h2{margin-top:0;color:var(--text);font-family:"Fraunces",ui-serif,
 
 ul.list{margin:0;padding:0;display:grid;gap:.65rem;list-style:none}
 ul.list li{display:flex;gap:.6rem;align-items:baseline;color:#1f2937}
-ul.list li::before{content:"";width:.5rem;height:.5rem;border-radius:999px;background:var(--brand-grad);flex:0 0 .5rem;transform:translateY(3px)}
 
 .location{display:flex;align-items:baseline;gap:.75rem;color:#475569}
 
